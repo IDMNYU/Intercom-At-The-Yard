@@ -1,0 +1,115 @@
+let myAudio;
+let ssp;
+let otherAudios = {};
+let audible = [];
+let thisZone = 0; //default to Microphone User
+let p5lm;
+let audioID = {};
+let isTalking = false;
+
+function setup() {
+  noCanvas();
+  
+  // Use constraints to request audio from createCapture
+  let constraints = {
+    audio: true,
+    video: false,
+    echocancellation: false,
+    noiseSuppression: false,
+    autoGainControl: false
+  };
+  
+  myAudio = createCapture(constraints, 
+    function(stream) {
+      p5lm = new p5LiveMedia(this, "CAPTURE", stream, "yard-intercom");
+      p5lm.on('stream', gotStream);
+      p5lm.on('data', gotData);
+    }
+  );
+  
+  myAudio.elt.muted = true;
+  myAudio.hide();
+}
+
+function gotStream(stream, id) {
+  console.log("Got stream from peer:", id);
+  otherAudios[id] = stream;
+  otherAudios[id].elt.muted = true; // mute by default
+  otherAudios[id].hide();
+}
+
+
+muteButton = document.getElementById("mute");
+muteButton.addEventListener("click", toggleMute);
+
+function toggleMute() {
+  if (myAudio.elt.muted) {
+    myAudio.elt.muted = false;
+    myAudio.elt.volume = 0;
+    muteButton.innerText = "Mute";
+    muteButton.style.backgroundColor = "red";
+    p5lm.send(JSON.stringify(audible)); //send current audible array when unmuted
+    
+  } else {
+    myAudio.elt.volume = 0;
+    myAudio.elt.muted = true;
+    muteButton.innerText = "Talk";
+    muteButton.style.backgroundColor = "green";
+    p5lm.send(JSON.stringify([])); //send empty array when muted
+  }
+}
+
+function joinRoom() {
+  //getAudioContext.resume();
+}
+
+form = document.querySelector("#zoneForm");
+form.addEventListener("submit", function(event) {
+  event.preventDefault();
+  const selectedRadio = document.querySelector('input[name="thisZone"]:checked');
+  thisZone = selectedRadio ? parseInt(selectedRadio.value) : 0;
+  console.log("thisZone is now", thisZone);
+});
+
+//loop through checkboxes and add to audible array
+form = document.querySelector("#destinationForm");
+form.addEventListener("change", function(event) {
+  audible = [];
+  const checkboxes = document.querySelectorAll('input[name="destination"]');
+  
+  checkboxes.forEach((checkbox, index) => {
+    if (checkbox.checked) {
+      audible.push(index); // Add 1 to index to match zone numbers
+    }
+  });
+
+  p5lm.send(JSON.stringify(audible));
+  
+});
+
+function gotData(data, id) {
+  try {
+    // Parse incoming data
+    let dataObj = JSON.parse(data);
+    let dataArray = dataObj.zones || dataObj; // Handle both formats
+    
+    console.log("Received from", id, ":", dataArray);
+    
+    // Check if this zone should hear the sender
+    if (Array.isArray(dataArray) && dataArray.includes(thisZone)) {
+      console.log("Unmuting audio from peer:", id);
+      if (otherAudios[id]) {
+        otherAudios[id].elt.muted = false;
+        otherAudios[id].elt.volume = 1.0;
+      }
+    } else {
+      console.log("Muting audio from peer:", id);
+      if (otherAudios[id]) {
+        otherAudios[id].elt.muted = true;
+      }
+    }
+  } catch (e) {
+    console.error("Error parsing data:", e);
+  }
+}
+

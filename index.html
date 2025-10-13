@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intercom at The Yard</title>
+    <script type="text/javascript" src="https://p5livemedia.itp.io/simplepeer.min.js"></script>
+	<script type="text/javascript" src="https://p5livemedia.itp.io/socket.io.js"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/addons/p5.sound.min.js" type="module"></script>	
+    <script type="text/javascript" src="https://p5livemedia.itp.io/p5livemedia.js"></script>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <h1>Intercom at The Yard</h1>
+    <form id="zoneForm">
+        <p>Select THIS zone:</p>
+        <input type="radio" id="user" name="thisZone" value="0" checked>
+        <label for="user">None (User)</label><br>
+        <input type="radio" id="zone_1" name="thisZone" value="1">
+        <label for="zone_1">Zone 1</label><br>
+        <input type="radio" id="zone_2" name="thisZone" value="2">
+        <label for="zone_2">Zone 2</label><br>
+        <input type="radio" id="zone_3" name="thisZone" value="3">
+        <label for="zone_3">Zone 3</label><br>
+        <input type="radio" id="zone_4" name="thisZone" value="4">
+        <label for="zone_4">Zone 4</label><br>
+        <input type="submit" value="Submit">
+    </form>
+    <br>
+    <!-- Enter The Yard code name -->
+    <!-- <input type="text" id="roomInput" placeholder="Enter The Yard code name"> -->
+    <!--checkbox to select destination  -->
+    <br>
+    <form id="destinationForm">
+        <p>Select destination zone(s):</p>
+        <input type="checkbox" name="destination" value="value1">
+        <label for="option1">All Destinations</label><br>
+        <input type="checkbox" name="destination" value="value1">
+        <label for="option1">Zone 1</label><br>
+        <input type="checkbox" name="destination" value="value1">
+        <label for="option1">Zone 2</label><br>
+        <input type="checkbox" name="destination" value="value1">
+        <label for="option1">Zone 3</label><br>
+        <input type="checkbox" name="destination" value="value1">
+        <label for="option1">Zone 4</label><br>
+    </form>
+    <button id="mute">Talk</button>
+    <br>
+    <button id="join" onclick="joinRoom()">Join The Yard Intercom System</button>
+    
+    <script src="sketch.js"></script>
+</body>
+</html>
