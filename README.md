@@ -1,5 +1,5 @@
 # Intercom at The Yard
-tion for real-time voice communication between different zones at Tandon's Navy Yard facility, NYU Tandon at The Yard. 
+Web application for real-time voice communication between different zones at Tandon's Navy Yard facility, NYU Tandon at The Yard. 
 
 It is made using p5LiveMedia by @vanevery, an implementation of WebRTC and socket.io using p5.js. For more information on p5LiveMedia see Shawn's [github repo](https://github.com/vanevery/p5LiveMedia).
 
