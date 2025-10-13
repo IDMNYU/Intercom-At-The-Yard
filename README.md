@@ -12,6 +12,7 @@ p5lm = new p5LiveMedia(this, "CAPTURE", stream, "unique-room-name");
 Otherwise you might experience crosstalk with other users of this repo!
 
 Select a zone and click submit. This should be left running and connected to a speaker to act as an intercom endpoint. 
+
 ![image](documentation/zoneselect.png)
 
 Selecting a zone allows other users of the website to unmute their microphone feed on that peer connection when pressing the "Talk" button. 
