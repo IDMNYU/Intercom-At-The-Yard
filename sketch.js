@@ -24,6 +24,7 @@ function setup() {
       p5lm = new p5LiveMedia(this, "CAPTURE", stream, "yard-intercom");
       p5lm.on('stream', gotStream);
       p5lm.on('data', gotData);
+      p5lm.on('disconnect', gotDisconnect);
     }
   );
   
@@ -38,29 +39,32 @@ function gotStream(stream, id) {
   otherAudios[id].hide();
 }
 
+function gotDisconnect(id) {
+  if (otherAudios[id]) {
+    otherAudios[id].remove();
+    delete otherAudios[id];
+  }
+}
 
 muteButton = document.getElementById("mute");
 muteButton.addEventListener("click", toggleMute);
 
 function toggleMute() {
-  if (myAudio.elt.muted) {
-    myAudio.elt.muted = false;
-    myAudio.elt.volume = 0;
+  if (!isTalking) {
     muteButton.innerText = "Mute";
     muteButton.style.backgroundColor = "red";
     p5lm.send(JSON.stringify(audible)); //send current audible array when unmuted
-    
+    isTalking = true;
   } else {
-    myAudio.elt.volume = 0;
-    myAudio.elt.muted = true;
     muteButton.innerText = "Talk";
     muteButton.style.backgroundColor = "green";
     p5lm.send(JSON.stringify([])); //send empty array when muted
+    isTalking = false;
   }
 }
 
 function joinRoom() {
-  //getAudioContext.resume();
+  console.log("user-interaction");
 }
 
 form = document.querySelector("#zoneForm");
@@ -96,7 +100,7 @@ function gotData(data, id) {
     console.log("Received from", id, ":", dataArray);
     
     // Check if this zone should hear the sender
-    if (Array.isArray(dataArray) && dataArray.includes(thisZone)) {
+    if (Array.isArray(dataArray) && dataArray.includes(thisZone) || dataArray.includes(0)) {
       console.log("Unmuting audio from peer:", id);
       if (otherAudios[id]) {
         otherAudios[id].elt.muted = false;
