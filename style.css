@@ -1,3 +1,9 @@
 #mute {
     background-color: green;
 }
+
+button {
+    width: 5em;
+    min-height: 40px;
+    height: auto ;
+}
