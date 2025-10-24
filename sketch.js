@@ -19,6 +19,8 @@ function setup() {
     autoGainControl: false
   };
   
+  
+
   myAudio = createCapture(constraints, 
     function(stream) {
       p5lm = new p5LiveMedia(this, "CAPTURE", stream, "yard-intercom");
@@ -26,10 +28,21 @@ function setup() {
       p5lm.on('data', gotData);
       p5lm.on('disconnect', gotDisconnect);
     }
-  );
-  
+  ).catch(function(err) {
+    console.error("Error accessing microphone:", err);
+    alert("Microphone access is required for this application.");
+    noMicrophone();
+  });
   myAudio.elt.muted = true;
   myAudio.hide();
+}
+
+function noMicrophone() {
+  // Initialize p5LiveMedia in listener-only mode (no capture)
+  p5lm = new p5LiveMedia(null, "LISTENER", null, "yard-intercom");
+  p5lm.on('stream', gotStream);
+  p5lm.on('data', gotData);
+  p5lm.on('disconnect', gotDisconnect);
 }
 
 function gotStream(stream, id) {
