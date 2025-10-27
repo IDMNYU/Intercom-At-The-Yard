@@ -19,22 +19,22 @@ function setup() {
     autoGainControl: false
   };
   
-  
-
-  myAudio = createCapture(constraints, 
-    function(stream) {
+  navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
+    myAudio = createCapture(constraints, function() {
       p5lm = new p5LiveMedia(this, "CAPTURE", stream, "yard-intercom");
       p5lm.on('stream', gotStream);
       p5lm.on('data', gotData);
       p5lm.on('disconnect', gotDisconnect);
+      
+    });
+    
+    if (myAudio) {
+        myAudio.elt.muted = true;
+        myAudio.hide();
     }
-  ).catch(function(err) {
-    console.error("Error accessing microphone:", err);
-    alert("Microphone access is required for this application.");
+  }).catch(function(err) {
     noMicrophone();
   });
-  myAudio.elt.muted = true;
-  myAudio.hide();
 }
 
 function noMicrophone() {
