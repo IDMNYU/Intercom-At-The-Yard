@@ -21,6 +21,7 @@ function setup() {
   
   navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
     myAudio = createCapture(constraints, function(stream) {
+      console.log("Microphone access granted.");
       p5lm = new p5LiveMedia(this, "CAPTURE", stream, "yard-intercom");
       p5lm.on('stream', gotStream);
       p5lm.on('data', gotData);
@@ -36,6 +37,7 @@ function setup() {
     }
   }).catch(function(err) {
     noMicrophone();
+    console.log(otherAudios)
     console.log("No microphone found or permission denied:", err);
     
   });
@@ -43,7 +45,7 @@ function setup() {
 
 function noMicrophone() {
   // Initialize p5LiveMedia in listener-only mode (no capture)
-  p5lm = new p5LiveMedia(null, "LISTENER", null, "yard-intercom");
+  p5lm = new p5LiveMedia(this, "LISTENER", null, "yard-intercom");
   p5lm.on('stream', gotStream);
   p5lm.on('data', gotData);
   p5lm.on('disconnect', gotDisconnect);
