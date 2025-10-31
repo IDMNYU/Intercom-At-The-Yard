@@ -20,7 +20,7 @@ function setup() {
   };
   
   navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
-    myAudio = createCapture(constraints, function() {
+    myAudio = createCapture(constraints, function(stream) {
       p5lm = new p5LiveMedia(this, "CAPTURE", stream, "yard-intercom");
       p5lm.on('stream', gotStream);
       p5lm.on('data', gotData);
@@ -29,11 +29,15 @@ function setup() {
     });
     
     if (myAudio) {
+      console.log("doing this");
         myAudio.elt.muted = true;
+        myAudio.elt.volume = 1.0;
         myAudio.hide();
     }
   }).catch(function(err) {
     noMicrophone();
+    console.log("No microphone found or permission denied:", err);
+    
   });
 }
 
@@ -43,6 +47,7 @@ function noMicrophone() {
   p5lm.on('stream', gotStream);
   p5lm.on('data', gotData);
   p5lm.on('disconnect', gotDisconnect);
+  console.log("Initialized in listener-only mode.");
 }
 
 function gotStream(stream, id) {
@@ -68,6 +73,7 @@ function toggleMute() {
     muteButton.style.backgroundColor = "red";
     p5lm.send(JSON.stringify(audible)); //send current audible array when unmuted
     isTalking = true;
+    //p5lm.send(JSON.stringify(audible))
   } else {
     muteButton.innerText = "Talk";
     muteButton.style.backgroundColor = "green";
@@ -99,8 +105,10 @@ form.addEventListener("change", function(event) {
       audible.push(index); // Add 1 to index to match zone numbers
     }
   });
-
-  p5lm.send(JSON.stringify(audible));
+  if (isTalking) {
+    p5lm.send(JSON.stringify(audible)); //send updated audible array if talking
+  }
+  //p5lm.send(JSON.stringify(audible));
   
 });
 
