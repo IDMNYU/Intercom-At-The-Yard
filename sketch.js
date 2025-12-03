@@ -30,10 +30,9 @@ function setup() {
     });
     
     if (myAudio) {
-      console.log("doing this");
-        myAudio.elt.muted = true;
-        myAudio.elt.volume = 1.0;
-        myAudio.hide();
+      myAudio.elt.muted = true;
+      myAudio.elt.volume = 1.0;
+      myAudio.hide();
     }
   }).catch(function(err) {
     noMicrophone();
@@ -67,16 +66,35 @@ function gotDisconnect(id) {
 }
 
 muteButton = document.getElementById("mute");
-muteButton.addEventListener("click", toggleMute);
 
-function toggleMute() {
+muteButton.addEventListener("mousedown", () => 
+  toggleOn()
+);
+
+muteButton.addEventListener("touchstart", () => 
+  toggleOn()
+);
+
+muteButton.addEventListener("mouseup", () => 
+  toggleOff()
+);
+
+muteButton.addEventListener("touchend", () => 
+  toggleOff()
+);
+
+
+function toggleOn() {
   if (!isTalking) {
     muteButton.innerText = "Mute";
     muteButton.style.backgroundColor = "red";
     p5lm.send(JSON.stringify(audible)); //send current audible array when unmuted
     isTalking = true;
-    //p5lm.send(JSON.stringify(audible))
-  } else {
+  } 
+}
+
+function toggleOff() {
+  if (isTalking) {
     muteButton.innerText = "Talk";
     muteButton.style.backgroundColor = "green";
     p5lm.send(JSON.stringify([])); //send empty array when muted
@@ -84,8 +102,14 @@ function toggleMute() {
   }
 }
 
-function joinRoom() {
-  console.log("user-interaction");
+function config() {
+  console.log("Toggling config");
+  console.log(document.querySelector("#config"));
+  if (document.querySelector("#config").style.visibility == "hidden") {
+    document.querySelector("#config").style.visibility = "visible";
+  } else {
+    document.querySelector("#config").style.visibility = "hidden";
+  }
 }
 
 form = document.querySelector("#zoneForm");
@@ -98,6 +122,7 @@ form.addEventListener("submit", function(event) {
 
 //loop through checkboxes and add to audible array
 form = document.querySelector("#destinationForm");
+
 form.addEventListener("change", function(event) {
   audible = [];
   const checkboxes = document.querySelectorAll('input[name="destination"]');
@@ -110,8 +135,6 @@ form.addEventListener("change", function(event) {
   if (isTalking) {
     p5lm.send(JSON.stringify(audible)); //send updated audible array if talking
   }
-  //p5lm.send(JSON.stringify(audible));
-  
 });
 
 function gotData(data, id) {

@@ -1,9 +1,87 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-size:4vw;
+    font-family: 'Arial', sans-serif;
+}
+
 #mute {
-    background-color: green;
+    background-color: darkmagenta;
+}
+
+#main{
+    background-color: white;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#header {
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#intercom {
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#config {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    visibility: hidden;
+}
+
+input[type="checkbox"] {
+    width: 5vw;
+    height: 5vw;
+    vertical-align: middle;
+}
+
+label {
+  display: inline-block;
 }
 
 button {
-    width: 5em;
-    min-height: 40px;
+    font-size: 8vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 35px;
+    border-width:1px;
+    width: 100%;
+    min-height: 80px;
     height: auto ;
+}
+
+ @media screen and (max-width: 768px) {
+    
+    #main {
+        height: 100vh;
+    }
+    
+    #intercom {
+        width: 90vw;
+        
+        display: block;
+        justify-content: start;
+    }
+    input[type="checkbox"] {
+        width: 16vw;
+        height: 16vw;
+    }
+    label {
+        font-size: 6vw;
+    }
 }
