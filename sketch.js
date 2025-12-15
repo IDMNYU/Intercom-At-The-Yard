@@ -16,6 +16,7 @@ function setup() {
     video: false,
     echocancellation: false,
     noiseSuppression: false,
+    latency: 0.01, // Set a low latency for real-time communication
     autoGainControl: false
   };
   
