@@ -9,7 +9,6 @@ let isTalking = false;
 
 function setup() {
   noCanvas();
-  
   // Use constraints to request audio from createCapture
   let constraints = {
     audio: true,
@@ -137,6 +136,11 @@ form.addEventListener("change", function(event) {
     p5lm.send(JSON.stringify(audible)); //send updated audible array if talking
   }
 });
+
+function zoneFunction(arg) {
+  audible.push(arg);
+  console.log(arg);
+}
 
 function gotData(data, id) {
   try {
