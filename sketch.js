@@ -1,3 +1,16 @@
+function disableImgDragging() {
+	var images = document.getElementsByTagName("img");
+	for(var i = 0 ; i < images.length ; i++) {
+		images[i].classList.add('no-drag');
+		images[i].setAttribute('no-drag', 'on');
+		images[i].setAttribute('draggable', 'false');
+		images[i].addEventListener('dragstart', function( event ) {
+			event.preventDefault();
+		}, false);	
+	}
+}
+disableImgDragging();
+
 let myAudio;
 let ssp;
 let otherAudios = {};
@@ -65,19 +78,27 @@ function gotDisconnect(id) {
 
 muteButton = document.getElementById("mute");
 
-muteButton.addEventListener("mousedown", () => 
+muteButton.addEventListener("pointerdown", () => 
   toggleOn()
 );
 
-muteButton.addEventListener("touchstart", () => 
-  toggleOn()
-);
-
-muteButton.addEventListener("mouseup", () => 
+muteButton.addEventListener("pointerup", () => 
   toggleOff()
 );
 
-muteButton.addEventListener("touchend", () => 
+muteButton.addEventListener("pointerleave", () => 
+  toggleOff()
+);
+
+muteButton.addEventListener("pointercancel", () => 
+  toggleOff()
+);
+
+window.addEventListener("pointerup", () =>
+  toggleOff()
+);
+
+window.addEventListener("pointercancel", () =>
   toggleOff()
 );
 
@@ -104,13 +125,13 @@ function toggleOff() {
 
 function config() {
   const configPanel = document.querySelector("#config");
-  const isHidden = window.getComputedStyle(configPanel).visibility === "hidden";
+  const isOpen = configPanel.classList.contains("isOpen");
   console.log("Toggling config");
   console.log(configPanel);
-  if (isHidden) {
-    configPanel.style.visibility = "visible";
+  if (!isOpen) {
+    configPanel.classList.add("isOpen");
   } else {
-    configPanel.style.visibility = "hidden";
+    configPanel.classList.remove("isOpen");
   }
 }
 
@@ -131,7 +152,7 @@ form.addEventListener("submit", function(event) {
   event.preventDefault();
   thisZone = parseInt(selectedZoneInput.value, 10) || 0;
   console.log("thisZone is now", thisZone);
-  document.querySelector("#config").style.visibility = "hidden";
+  document.querySelector("#config").classList.remove("isOpen");
 });
 
 //loop through checkboxes and add to audible array
