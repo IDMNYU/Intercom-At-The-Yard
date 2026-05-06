@@ -194,6 +194,9 @@ h2 {
     opacity: 0.4;
      /* Transitions the opacity property over 0.5 seconds with an 'ease' effect */
     transition: opacity 0.5s ease;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 
