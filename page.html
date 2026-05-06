@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centered Images</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+            
+        }
+
+        .container img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+
+        }
+
+        .image-large {
+            position:relative;
+            width: 400px;
+            left:100px;
+        }
+
+        .image-small {
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="images/Button_1_Zone.png" alt="Large Image" class="image-large">
+        <img src="images/Button_2_Zone.png" alt="Small Image" class="image-small">
+    </div>
+</body>
+</html>

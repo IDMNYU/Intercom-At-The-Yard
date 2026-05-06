@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Intercom at The Yard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <script type="text/javascript" src="https://p5livemedia.itp.io/simplepeer.min.js"></script>
 	<script type="text/javascript" src="https://p5livemedia.itp.io/socket.io.js"></script>    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js"></script>
@@ -13,10 +16,33 @@
 <body>
     <div id="main">
         <div id="header">
-            <h1>Intercom at The Yard</h1>
+            <img src="images/IDM.png" height="70%" class="clickable">
+            <img src="images/Menu_Hamburger.png" height="70%" onclick="config()" class="clickable">
+        </div>
+        <div id="title">
+            <img height="100%" src="images/Heading_Intercom.png">
+        </div>
+        <div id="intercom-interface">
+            <h2>SELECT ZONE</h2>
+            <div id="touchable">
+                <img src="images/Button_ALL.png" class="all-button clickable zone_0_button" onclick="zoneFunction(0)">
+                <img src="images/Button_1_Zone.png" class="zone_1_button clickable" onclick="zoneFunction(1)">
+                <img src="images/Button_2_Zone.png" class="zone_2_button clickable" onclick="zoneFunction(2)">
+                <img src="images/Button_3_Zone.png" class="zone_3_button clickable" onclick="zoneFunction(3)">
+                <img src="images/Button_4_Zone.png" class="zone_4_button clickable" onclick="zoneFunction(4)">                
+                <!-- <div id="zone-overlay">                    
+                </div>   -->
+            </div>
+        </div>
+        <h2>TALK</h2>
+        <div id="talk">
+            <img id="mute" src="images/Button_Talk_FullOpacity.png">
+        </div>
+        <div id="footer">
+            <img src="images/Tandon_NYULogo.png" width="300px">
         </div>
         <div id="intercom">
-            <form id="destinationForm">
+            <!-- <form id="destinationForm">
                 <p>Select destination zone(s):</p>
                 <input type="checkbox" name="destination" value="value1">
                 <label for="option1">All Destinations</label><br>
@@ -31,24 +57,38 @@
             </form>
             <br>
             <button id="mute">Talk</button>
-            <br>  
-            <button id="join" onclick="config()">Setup</button>
-            <div id="config">
-                <form id="zoneForm">
-                    <p>Select THIS zone:</p>
-                    <input type="radio" id="user" name="thisZone" value="0" checked>
-                    <label for="user">None (User)</label><br>
-                    <input type="radio" id="zone_1" name="thisZone" value="1">
-                    <label for="zone_1">Zone 1</label><br>
-                    <input type="radio" id="zone_2" name="thisZone" value="2">
-                    <label for="zone_2">Zone 2</label><br>
-                    <input type="radio" id="zone_3" name="thisZone" value="3">
-                    <label for="zone_3">Zone 3</label><br>
-                    <input type="radio" id="zone_4" name="thisZone" value="4">
-                    <label for="zone_4">Zone 4</label><br>
-                    <input type="submit" value="Submit">
-                </form>
+            <br>   -->
+            <!-- <button id="join" onclick="config()">Setup</button> -->
+            <div id="modal">
+                <div id="config">
+                    <form id="zoneForm">
+                        <h2>Select THIS zone and submit.</h2>
+                        <input type="hidden" id="selectedZone" name="thisZone" value="0">
+                        <div class="zone-selector">
+                            <button type="button" class="zone-option zone-option-text zoneActive" data-zone="0">
+                                None (User)
+                            </button>
+                            <button type="button" class="zone-option" data-zone="1" aria-label="Zone 1">
+                                <img src="images/Button_1_Zone.png" alt="Zone 1">
+                            </button>
+                            <button type="button" class="zone-option" data-zone="2" aria-label="Zone 2">
+                                <img src="images/Button_2_Zone.png" alt="Zone 2">
+                            </button>
+                            <button type="button" class="zone-option" data-zone="3" aria-label="Zone 3">
+                                <img src="images/Button_3_Zone.png" alt="Zone 3">
+                            </button>
+                            <button type="button" class="zone-option" data-zone="4" aria-label="Zone 4">
+                                <img src="images/Button_4_Zone.png" alt="Zone 4">
+                            </button>
+                        </div>
+                        <input id = "submit" type="submit" value="Submit">
+                    </form>
+                    <div id="attribution">
+                        <p>credits: Tommy Martinez (Programming) - Ava Kling (Design) - Uses <a href="https://github.com/vanevery/p5LiveMedia?tab=readme-ov-file">p5LiveMedia</a> by Shawn Van Every</p>
+                    </div>
+                </div>  
             </div>
+            
         </div>
     </div>  
     <script src="sketch.js"></script>

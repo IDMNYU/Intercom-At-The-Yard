@@ -1,28 +1,116 @@
-body {
-    margin: 0;
-    padding: 0;
-    font-size:4vw;
-    font-family: 'Arial', sans-serif;
+.montserrat-montsy {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
 }
 
-#mute {
-    background-color: darkmagenta;
+body {
+    margin:0px;
+    font-size:4vw;
+    font-family: 'Montserrat', sans-serif;
+    color:white;
+    background: radial-gradient(at 61.4% 20.4%, #6FB6F7 0px, transparent 50%), radial-gradient(at 8.1% 10.8%, #3090F0 0px, transparent 50%), radial-gradient(at 94% 94.9%, #5314A6 0px, transparent 50%), radial-gradient(at 37.4% 77.7%, #E6A4FC 0px, transparent 50%) #FFFFFF;
+    mix-blend-mode: var(--_gradient-blend-mode);
 }
 
 #main{
-    background-color: white;
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;    
+}
+
+#header {
+    width:100%;
+    box-sizing:border-box;
+    padding: 8px 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height:10vh;
+}
+
+#title {
+    width:100%;
+    height:100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#intercom-interface {
+    width:100%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-#header {
-    height: auto;
-    display: flex;
-    align-items: center;
+#touchable {
+    width:100%;
+    display:flex;
     justify-content: center;
+    align-items: center;
+}
+
+#touchable img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.all-button {
+    position:relative;
+    left:160px;
+    width: 300px; 
+}
+
+.zone_1_button {
+    position:relative;
+    width:80px;
+    left:-150px;
+}
+
+.zone_2_button {
+    position:relative;
+    width:80px;
+    left:-110px;
+    top:-100px;
+}
+.zone_3_button {
+    position:relative;
+    width:80px;
+    left:-80px;
+}
+.zone_4_button {
+    position:relative;
+    width:80px;
+    left:-270px;
+    top:100px;
+}
+
+
+#talk {
+    width:100%;
+    height:10vh;
+    display: flex;
+    justify-content: center;
+}   
+
+#footer {
+    /* margin-top:100px; */
+    /* width:auto; */
+    /* height:10vh; */
+    display: flex;
+    justify-content: center;
+}
+
+h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 26px;
+    margin-bottom:0px;
 }
 
 #intercom {
@@ -30,7 +118,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+
 }
 
 #config {
@@ -43,6 +131,68 @@ body {
     visibility: hidden;
 }
 
+#zoneForm {
+    width: min(420px, 90vw);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+}
+
+#zoneForm p {
+    margin: 0;
+}
+
+.zone-selector {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.zone-option {
+    border: 0;
+    width: 100%;
+    min-height: 120px;
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 20px;
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.45;
+    transition: opacity 0.25s ease, transform 0.25s ease, background-color 0.25s ease;
+}
+
+.zone-option img {
+    width: 100%;
+    max-width: 120px;
+    height: auto;
+    display: block;
+}
+
+.zone-option.zoneActive {
+    opacity: 1;
+    transform: scale(1.03);
+    background: rgba(255, 255, 255, 0.32);
+}
+
+.zone-option-text {
+    min-height: 72px;
+    font: inherit;
+    font-size: 24px;
+    color: white;
+    grid-column: 1 / -1;
+}
+
+#mute {
+    cursor: pointer;
+    opacity: 0.4;
+     /* Transitions the opacity property over 0.5 seconds with an 'ease' effect */
+    transition: opacity 0.5s ease;
+}
+
+
 input[type="checkbox"] {
     width: 5vw;
     height: 5vw;
@@ -51,6 +201,10 @@ input[type="checkbox"] {
 
 label {
   display: inline-block;
+}
+
+#modal {
+    visibility: hidden;
 }
 
 button {
@@ -65,23 +219,39 @@ button {
     height: auto ;
 }
 
- @media screen and (max-width: 768px) {
-    
-    #main {
-        height: 100vh;
-    }
-    
-    #intercom {
-        width: 90vw;
-        
-        display: block;
-        justify-content: start;
-    }
-    input[type="checkbox"] {
-        width: 16vw;
-        height: 16vw;
-    }
-    label {
-        font-size: 6vw;
-    }
+input[type="submit"] {
+    border: 0;
+    border-radius: 999px;
+    padding: 12px 28px;
+    font: inherit;
+    color: #1f3d7a;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.clickable {
+    cursor: pointer;
+    /* ease */
+    opacity: 0.4;
+     /* Transitions the opacity property over 0.5 seconds with an 'ease' effect */
+    transition: opacity 0.5s ease;
+}
+
+#mute.zoneActive {
+    opacity: 1;
+}
+
+.zoneActive {
+    opacity: 1;
+}
+
+#submit {
+    width: 100%;
+    color:white;
+    background-color: rgba(255, 255, 255, 0.32);
+}
+
+#attribution {
+    font-size: 12px;
+    opacity: 0.4;
+    margin-top: 20px;
 }

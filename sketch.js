@@ -9,7 +9,6 @@ let isTalking = false;
 
 function setup() {
   noCanvas();
-  
   // Use constraints to request audio from createCapture
   let constraints = {
     audio: true,
@@ -27,7 +26,6 @@ function setup() {
       p5lm.on('stream', gotStream);
       p5lm.on('data', gotData);
       p5lm.on('disconnect', gotDisconnect);
-      
     });
     
     if (myAudio) {
@@ -39,7 +37,6 @@ function setup() {
     noMicrophone();
     console.log(otherAudios)
     console.log("No microphone found or permission denied:", err);
-    
   });
 }
 
@@ -87,8 +84,9 @@ muteButton.addEventListener("touchend", () =>
 
 function toggleOn() {
   if (!isTalking) {
-    muteButton.innerText = "Mute";
-    muteButton.style.backgroundColor = "red";
+    console.log("Toggling on");
+    //muteButton.innerText = "Mute";
+    muteButton.classList.add("zoneActive");
     p5lm.send(JSON.stringify(audible)); //send current audible array when unmuted
     isTalking = true;
   } 
@@ -96,47 +94,76 @@ function toggleOn() {
 
 function toggleOff() {
   if (isTalking) {
-    muteButton.innerText = "Talk";
-    muteButton.style.backgroundColor = "green";
+    console.log("Toggling off");
+    //muteButton.innerText = "Talk";
+    muteButton.classList.remove("zoneActive");
     p5lm.send(JSON.stringify([])); //send empty array when muted
     isTalking = false;
   }
 }
 
 function config() {
+  const configPanel = document.querySelector("#config");
+  const isHidden = window.getComputedStyle(configPanel).visibility === "hidden";
   console.log("Toggling config");
-  console.log(document.querySelector("#config"));
-  if (document.querySelector("#config").style.visibility == "hidden") {
-    document.querySelector("#config").style.visibility = "visible";
+  console.log(configPanel);
+  if (isHidden) {
+    configPanel.style.visibility = "visible";
   } else {
-    document.querySelector("#config").style.visibility = "hidden";
+    configPanel.style.visibility = "hidden";
   }
 }
 
 form = document.querySelector("#zoneForm");
+zoneOptions = document.querySelectorAll(".zone-option");
+selectedZoneInput = document.querySelector("#selectedZone");
+
+zoneOptions.forEach((option) => {
+  option.addEventListener("click", function() {
+    const zoneValue = this.dataset.zone;
+    selectedZoneInput.value = zoneValue;
+    zoneOptions.forEach((button) => button.classList.remove("zoneActive"));
+    this.classList.add("zoneActive");
+  });
+});
+
 form.addEventListener("submit", function(event) {
   event.preventDefault();
-  const selectedRadio = document.querySelector('input[name="thisZone"]:checked');
-  thisZone = selectedRadio ? parseInt(selectedRadio.value) : 0;
+  thisZone = parseInt(selectedZoneInput.value, 10) || 0;
   console.log("thisZone is now", thisZone);
+  document.querySelector("#config").style.visibility = "hidden";
 });
 
 //loop through checkboxes and add to audible array
 form = document.querySelector("#destinationForm");
-
-form.addEventListener("change", function(event) {
-  audible = [];
-  const checkboxes = document.querySelectorAll('input[name="destination"]');
+// form.addEventListener("change", function(event) {
+//   audible = [];
+//   const checkboxes = document.querySelectorAll('input[name="destination"]');
   
-  checkboxes.forEach((checkbox, index) => {
-    if (checkbox.checked) {
-      audible.push(index); // Add 1 to index to match zone numbers
+//   checkboxes.forEach((checkbox, index) => {
+//     if (checkbox.checked) {
+//       audible.push(index); // Add 1 to index to match zone numbers
+//     }
+//   });
+//   if (isTalking) {
+//     p5lm.send(JSON.stringify(audible)); //send updated audible array if talking
+//   }
+// });
+
+function zoneFunction(arg) {
+  const zoneButton = document.querySelector(`.zone_${arg}_button`);
+  const isActive = zoneButton.classList.toggle("zoneActive");
+
+  if (isActive) {
+    if (!audible.includes(arg)) {
+      audible.push(arg);
     }
-  });
-  if (isTalking) {
-    p5lm.send(JSON.stringify(audible)); //send updated audible array if talking
+  } else {
+    audible = audible.filter((zone) => zone !== arg);
   }
-});
+
+  console.log("audible zones:", audible);
+}
 
 function gotData(data, id) {
   try {
@@ -163,4 +190,3 @@ function gotData(data, id) {
     console.error("Error parsing data:", e);
   }
 }
-
