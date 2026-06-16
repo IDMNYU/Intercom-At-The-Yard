@@ -97,6 +97,7 @@ body {
     height:10vh;
     display: flex;
     justify-content: center;
+    align-items: center;
 }   
 
 #footer {
@@ -191,6 +192,10 @@ h2 {
 
 #mute {
     cursor: pointer;
+    display: block;
+    width: auto;
+    max-width: 100%;
+    max-height: 100%;
     opacity: 0.4;
      /* Transitions the opacity property over 0.5 seconds with an 'ease' effect */
     transition: opacity 0.5s ease;
