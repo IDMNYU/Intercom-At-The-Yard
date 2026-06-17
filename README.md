@@ -1,7 +1,7 @@
 # Intercom at The Yard
 A web application for intercom style 📢 voice communication 🗣️ 🔈 between different "zones" at NYU Tandon at The Yard. The intercom system is used for announcements mostly during public events and showcases.
 
-*intercome* is made with p5LiveMedia by @vanevery, a WebRTC library for p5.js. For more information about p5LiveMedia see Shawn's [github repo](https://github.com/vanevery/p5LiveMedia) here.
+*intercom* is made with p5LiveMedia by @vanevery, a WebRTC library for p5.js. For more information about p5LiveMedia see Shawn's [github repo](https://github.com/vanevery/p5LiveMedia) here.
 
 This repo is intended to provide a starting point for DIY, networked, multi-zone announcement systems.
 
