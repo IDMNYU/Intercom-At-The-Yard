@@ -22,3 +22,6 @@ Selecting a zone allows other users of the website to unmute their microphone fe
 Be sure to press the "Mute" button when you are done talking...
 
 ![muting](documentation/mute.png)
+
+# Build and Environment Variables
+This project uses Vite to bundle the project so that environment variables can be used. Imagine pushing your room name to a public repo, anyone with access to that repo would be able to use your intercom! 

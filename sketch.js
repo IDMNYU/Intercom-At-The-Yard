@@ -1,3 +1,5 @@
+const INTERCOM_ROOM = import.meta.env.VITE_INTERCOM_ROOM || "yard-intercom";
+
 function disableImgDragging() {
 	var images = document.getElementsByTagName("img");
 	for(var i = 0 ; i < images.length ; i++) {
@@ -19,8 +21,12 @@ let thisZone = 0; //default to Microphone User
 let p5lm;
 let audioID = {};
 let isTalking = false;
+const muteButton = document.getElementById("mute");
+const zoneForm = document.querySelector("#zoneForm");
+const zoneOptions = document.querySelectorAll(".zone-option");
+const selectedZoneInput = document.querySelector("#selectedZone");
 
-function setup() {
+window.setup = function setup() {
   noCanvas();
   // Use constraints to request audio from createCapture
   let constraints = {
@@ -35,7 +41,7 @@ function setup() {
   navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
     myAudio = createCapture(constraints, function(stream) {
       console.log("Microphone access granted.");
-      p5lm = new p5LiveMedia(this, "CAPTURE", stream, "yard-intercom");
+      p5lm = new p5LiveMedia(window, "CAPTURE", stream, INTERCOM_ROOM);
       p5lm.on('stream', gotStream);
       p5lm.on('data', gotData);
       p5lm.on('disconnect', gotDisconnect);
@@ -51,11 +57,11 @@ function setup() {
     console.log(otherAudios)
     console.log("No microphone found or permission denied:", err);
   });
-}
+};
 
 function noMicrophone() {
   // Initialize p5LiveMedia in listener-only mode (no capture)
-  p5lm = new p5LiveMedia(this, "LISTENER", null, "yard-intercom");
+  p5lm = new p5LiveMedia(window, "LISTENER", null, INTERCOM_ROOM);
   p5lm.on('stream', gotStream);
   p5lm.on('data', gotData);
   p5lm.on('disconnect', gotDisconnect);
@@ -75,8 +81,6 @@ function gotDisconnect(id) {
     delete otherAudios[id];
   }
 }
-
-muteButton = document.getElementById("mute");
 
 muteButton.addEventListener("pointerdown", () => 
   toggleOn()
@@ -123,7 +127,7 @@ function toggleOff() {
   }
 }
 
-function config() {
+window.config = function config() {
   const configPanel = document.querySelector("#config");
   const isOpen = configPanel.classList.contains("isOpen");
   console.log("Toggling config");
@@ -133,11 +137,7 @@ function config() {
   } else {
     configPanel.classList.remove("isOpen");
   }
-}
-
-form = document.querySelector("#zoneForm");
-zoneOptions = document.querySelectorAll(".zone-option");
-selectedZoneInput = document.querySelector("#selectedZone");
+};
 
 zoneOptions.forEach((option) => {
   option.addEventListener("click", function() {
@@ -148,7 +148,7 @@ zoneOptions.forEach((option) => {
   });
 });
 
-form.addEventListener("submit", function(event) {
+zoneForm.addEventListener("submit", function(event) {
   event.preventDefault();
   thisZone = parseInt(selectedZoneInput.value, 10) || 0;
   console.log("thisZone is now", thisZone);
@@ -156,7 +156,7 @@ form.addEventListener("submit", function(event) {
 });
 
 //loop through checkboxes and add to audible array
-form = document.querySelector("#destinationForm");
+const destinationForm = document.querySelector("#destinationForm");
 // form.addEventListener("change", function(event) {
 //   audible = [];
 //   const checkboxes = document.querySelectorAll('input[name="destination"]');
@@ -171,7 +171,7 @@ form = document.querySelector("#destinationForm");
 //   }
 // });
 
-function zoneFunction(arg) {
+window.zoneFunction = function zoneFunction(arg) {
   const zoneButton = document.querySelector(`.zone_${arg}_button`);
   const isActive = zoneButton.classList.toggle("zoneActive");
 
@@ -184,7 +184,7 @@ function zoneFunction(arg) {
   }
 
   console.log("audible zones:", audible);
-}
+};
 
 function gotData(data, id) {
   try {
