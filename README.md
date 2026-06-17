@@ -1,7 +1,7 @@
 # Intercom at The Yard
 A web application for intercom style 📢 voice communication 🗣️ 🔈 between different "zones" at NYU Tandon at The Yard. The intercom system is used for announcements mostly during public events and showcases.
 
-Made using p5LiveMedia by @vanevery, an implementation of WebRTC and socket.io in p5.js. For more information on p5LiveMedia see Shawn's [github repo](https://github.com/vanevery/p5LiveMedia) here.
+*intercome* is made with p5LiveMedia by @vanevery, a WebRTC library for p5.js. For more information about p5LiveMedia see Shawn's [github repo](https://github.com/vanevery/p5LiveMedia) here.
 
 This repo is intended to provide a starting point for DIY, networked, multi-zone announcement systems.
 
@@ -32,31 +32,28 @@ npm run dev
 You should now be able to test the app locally. 
 
 ## Deployment
-I use vercel to deploy the repo 
+I use vercel to deploy the repo using an environment variable in the build rules.
+
 ## Usage
 Deploy the website using a unique *room name*. The *room name* is configured in the .env file. See the .env.example file in this repo. 
 
-Change the environment variable to create a dedicated private channel for your intercom endpoints. Make sure this variable is hard to guess! Otherwise strangers might be able to make **strange noises** in your endpoints.
+Change the environment variable to create a dedicated private channel for your intercom endpoints. Make sure this variable is hard to guess! Otherwise strangers might be able to make **weird noises** in your endpoints.
 
 To designate a speaker/computer pair as an endpoint. Simply...
 
 * connect a computer (we use small Raspberry Pi computers) to a loudspeaker and point it's browser to your hosted clone of this repo. 
 
-* Click the hamburger 🍔 menu and select a zone and click *submit*. 
+* Click the hamburger 🍔 menu ![hamburger](documentation/intercom-hamburger.png) and select a zone and click *submit*. ![zone](documentation/intercom-zone-select.png) 
   
 To address the endpoint from a microphone simply...
 
-* point your desktop or mobile browser (make sure it has a microphone connected 🎤) to your hosted clone of this repo. Select a zone using he touch interface and hold down the *talk* button.
-
-![image](documentation/zoneselect.png)
-
-Selecting a zone allows other users of the website to unmute their microphone feed on that peer connection when pressing the "Talk" button. 
-
-![talking_img](documentation/talking.png)
-
-Be sure to press the "Mute" button when you are done talking...
-
-![muting](documentation/mute.png)
+* point your desktop or mobile browser (make sure it has a microphone connected 🎤) to your hosted clone of this repo. Select a zone using the touch interface ![zone](documentation/intercom-touch-1.png) 
+   and hold down the *talk* button to send sound to the endpoint. 
+![image](documentation/intercom-touch-talk.png) 
+* You can send audio to multiple zones. 
+![image](documentation/intercom-touch-1-2-3.png)
+* You can also send sound to every zone using the *all button*.
+![image](documentation/intercom-touch-all.png)
 
 ## Attribution
 Tommy Martinez @ogbabydiesal: hardware systems and programming
@@ -66,3 +63,6 @@ Ava Kling @avasion: Design
 Shawn Van Every @vanevery: p5LiveMedia, main dependencies
 
 Todd Bryant: Inspo and Encouragement
+
+## Contact
+For more information about the library contact bnyaccess@nyu.edu.
