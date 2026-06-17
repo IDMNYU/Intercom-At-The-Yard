@@ -50,6 +50,7 @@ body {
 
 #touchable {
     width:100%;
+    min-width: 560px;
     display:flex;
     justify-content: center;
     align-items: center;
