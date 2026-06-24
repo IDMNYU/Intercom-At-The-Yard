@@ -41,6 +41,11 @@
         <div id="intercom">
             <div id="modal">
                 <div id="config">
+                    <div id="audioControls">
+                        <h2>Select audio source.</h2>
+                        <select id="audioInput" class="config-control" aria-label="Audio input"><option value="">Default microphone</option></select>
+                        <label class="config-control music-mode-option"><input id="musicMode" type="checkbox"> Music mode (click TALK to start/stop)</label>
+                    </div>
                     <form id="zoneForm">
                         <h2>Select THIS zone and submit.</h2>
                         <input type="hidden" id="selectedZone" name="thisZone" value="0">

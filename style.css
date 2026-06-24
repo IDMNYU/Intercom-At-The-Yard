@@ -137,12 +137,27 @@ h2 {
     display: flex;
 }
 
+#audioControls,
 #zoneForm {
     width: min(420px, 90vw);
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 18px;
+}
+
+.music-mode-option {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 16px;
+}
+
+#musicMode {
+    width: 20px;
+    height: 20px;
 }
 
 #zoneForm p {
@@ -228,6 +243,7 @@ button {
     height: auto ;
 }
 
+.config-control,
 input[type="submit"] {
     border: 0;
     border-radius: 999px;
@@ -235,6 +251,10 @@ input[type="submit"] {
     font: inherit;
     color: #1f3d7a;
     background: rgba(255, 255, 255, 0.9);
+}
+
+.config-control {
+    font-size: 16px;
 }
 
 .clickable {
@@ -256,7 +276,8 @@ input[type="submit"] {
     opacity: 1;
 }
 
-#submit {
+#submit,
+.config-control {
     width: 100%;
     color:white;
     background-color: rgba(255, 255, 255, 0.32);
