@@ -16,7 +16,7 @@
     <div id="main">
         <div id="header">
             <img src="images/IDM.png" height="70%" class="clickable">
-            <img src="images/Menu_Hamburger.png" height="70%" onclick="config()" class="clickable">
+            <img src="images/Menu_Hamburger.png" height="70%" onclick="config()" class="clickable menu-button" aria-label="Open settings">
         </div>
         <div id="title">
             <img height="100%" src="images/Heading_Intercom.png">
@@ -31,9 +31,10 @@
                 <img src="images/Button_4_Zone.png" class="zone_4_button clickable" onclick="zoneFunction(4)">                
             </div>
         </div>
-        <h2>TALK</h2>
+        <h2 id="talkHeading">TALK</h2>
+        <p id="talkModeHint" class="talk-mode-hint">Hold to talk.</p>
         <div id="talk">
-            <img id="mute" src="images/Button_Talk_FullOpacity.png">
+            <img id="mute" src="images/Button_Talk_FullOpacity.png" role="button" tabindex="0" aria-label="Start or stop audio" aria-pressed="false">
         </div>
         <div id="footer">
             <img src="images/Tandon_NYULogo.png" width="300px">
@@ -62,6 +63,28 @@
                             </button>
                         </div>
                         <input id = "submit" type="submit" value="Submit">
+                    </form>
+                    <form id="audioSourceForm">
+                        <h2>Choose audio source</h2>
+                        <label for="audioSourceType">Source type</label>
+                        <select id="audioSourceType">
+                            <option value="input">Microphone or virtual audio device</option>
+                            <option value="display">Browser tab or desktop audio</option>
+                        </select>
+                        <div id="inputDeviceGroup" class="source-input-group">
+                            <label for="audioInputDevice">Audio input</label>
+                            <select id="audioInputDevice">
+                                <option value="">Default audio input</option>
+                            </select>
+                            <button id="refreshDevices" class="source-action source-action-secondary" type="button">Refresh inputs</button>
+                        </div>
+                        <label class="continuous-mode-option">
+                            <input id="continuousMode" type="checkbox">
+                            <span>Music mode: click once to start and once to stop</span>
+                        </label>
+                        <button class="source-action" type="submit">Use audio source</button>
+                        <p id="audioSourceStatus" role="status">The default microphone will connect automatically.</p>
+                        <p class="source-help">For Spotify, Apple Music, or another desktop app, route audio through BlackHole, Loopback, or VB-Cable and select it above. For browser audio, choose Browser tab or desktop audio and enable Share audio in the browser prompt.</p>
                     </form>
                     <div id="attribution">
                         <p>credits: Tommy Martinez (Programming) - Ava Kling (Design) - Uses <a href="https://github.com/vanevery/p5LiveMedia?tab=readme-ov-file">p5LiveMedia</a> by Shawn Van Every</p>
