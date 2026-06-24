@@ -67,5 +67,7 @@ Shawn Van Every [@vanevery](https://github.com/vanevery): p5LiveMedia, main depe
 
 Todd Bryant [website](https://toddjbryant.com/): Inspo and Encouragement
 
+Isaiah Hashimoto(https://isaiahhashimoto.com): Blackhole Music Feature
+
 ## Contact
 For more information about the library contact bnyaccess@nyu.edu.

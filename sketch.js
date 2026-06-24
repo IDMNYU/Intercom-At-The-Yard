@@ -25,12 +25,15 @@ const muteButton = document.getElementById("mute");
 const zoneForm = document.querySelector("#zoneForm");
 const zoneOptions = document.querySelectorAll(".zone-option");
 const selectedZoneInput = document.querySelector("#selectedZone");
+const audioInput = document.querySelector("#audioInput");
+const musicMode = document.querySelector("#musicMode");
+const savedAudioInput = localStorage.getItem("audioInput") || "";
 
 window.setup = function setup() {
   noCanvas();
   // Use constraints to request audio from createCapture
   let constraints = {
-    audio: true,
+    audio: savedAudioInput ? { deviceId: { exact: savedAudioInput }, channelCount: { ideal: 2 } } : true,
     video: false,
     echocancellation: false,
     noiseSuppression: false,
@@ -39,6 +42,12 @@ window.setup = function setup() {
   };
   
   navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
+    navigator.mediaDevices.enumerateDevices().then(function(devices) {
+      devices.filter((device) => device.kind === "audioinput").forEach(function(device) {
+        audioInput.add(new Option(device.label, device.deviceId));
+      });
+      audioInput.value = savedAudioInput;
+    });
     myAudio = createCapture(constraints, function(stream) {
       console.log("Microphone access granted.");
       p5lm = new p5LiveMedia(window, "CAPTURE", stream, INTERCOM_ROOM);
@@ -53,11 +62,17 @@ window.setup = function setup() {
       myAudio.hide();
     }
   }).catch(function(err) {
+    localStorage.removeItem("audioInput");
     noMicrophone();
     console.log(otherAudios)
     console.log("No microphone found or permission denied:", err);
   });
 };
+
+audioInput.addEventListener("change", function() {
+  localStorage.setItem("audioInput", this.value);
+  window.location.reload();
+});
 
 function noMicrophone() {
   // Initialize p5LiveMedia in listener-only mode (no capture)
@@ -82,30 +97,33 @@ function gotDisconnect(id) {
   }
 }
 
-muteButton.addEventListener("pointerdown", () => 
-  toggleOn()
+muteButton.addEventListener("pointerdown", () =>
+  musicMode.checked && isTalking ? toggleOff() : toggleOn()
 );
 
 muteButton.addEventListener("pointerup", () => 
-  toggleOff()
+  stopTalking()
 );
 
 muteButton.addEventListener("pointerleave", () => 
-  toggleOff()
+  stopTalking()
 );
 
 muteButton.addEventListener("pointercancel", () => 
-  toggleOff()
+  stopTalking()
 );
 
 window.addEventListener("pointerup", () =>
-  toggleOff()
+  stopTalking()
 );
 
 window.addEventListener("pointercancel", () =>
-  toggleOff()
+  stopTalking()
 );
 
+function stopTalking() {
+  if (!musicMode.checked) toggleOff();
+}
 
 function toggleOn() {
   if (!isTalking) {
